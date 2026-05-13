@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBook - Запись к врачу в Шарыпово</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #06b6d4;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .navbar-brand::before {
+            content: '+';
+            font-size: 2rem;
+            -webkit-text-fill-color: var(--primary);
+            margin-right: 0.2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 0 60px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .btn-gradient {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            color: white;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Floating Animation */
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: float 6s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .floating-card:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .floating-card:nth-child(2) { top: 40%; right: 0%; animation-delay: 2s; }
+        .floating-card:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .doctor-circle {
+            width: 350px;
+            height: 350px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3);
+            overflow: hidden;
+        }
+
+        .doctor-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Section Headers */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Cards */
+        .custom-card {
+            background: white;
+            border-radius: 24px;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .card-header-gradient {
+            height: 120px;
+            background: var(--gradient-1);
+            position: relative;
+        }
+
+        .card-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body-custom {
+            padding: 3.5rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #dbeafe;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Feature Cards */
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .bg-gradient-1 { background: var(--gradient-1); }
+        .bg-gradient-2 { background: var(--gradient-2); }
+        .bg-gradient-3 { background: var(--gradient-3); }
+
+        /* Stats Section */
+        .stats-box {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Clinic Cards */
+        .clinic-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: absolute;
+            bottom: -40px;
+            left: 2rem;
+            z-index: 10;
+        }
+
+        .service-tag {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: #f1f5f9;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark);
+            margin: 0.2rem;
+        }
+
+        /* Map Placeholder */
+        .map-box {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            border: 2px dashed #cbd5e1;
+        }
+
+        /* Filters */
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin: 0.25rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Modal Custom */
+        .modal-content {
+            border-radius: 30px;
+            border: none;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 2rem 2rem 0;
+        }
+
+        .modal-body {
+            padding: 1rem 2rem 2rem;
+        }
+
+        .form-control-custom {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-control-custom.is-invalid {
+            border-color: var(--danger);
+            background-image: none;
+        }
+
+        .invalid-feedback {
+            display: none;
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .form-control-custom.is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-toast {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            min-width: 300px;
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            padding: 100px 0 60px;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Team Section */
+        .team-avatar {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            color: #fbbf24;
+        }
+
+        /* Contact Page Styles */
+        .contact-hero {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .contact-info-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-info-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        .bg-vk { background: #4a76a8; }
+        .bg-telegram { background: #0088cc; }
+        .bg-whatsapp { background: #25d366; }
+        .bg-email { background: var(--danger); }
+
+        .map-container {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .map-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .working-hours {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .hours-row .day {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .hours-row .time {
+            color: var(--gray);
+        }
+
+        .hours-row.today {
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            margin: 0 -0.5rem;
+        }
+
+        .hours-row.today .day,
+        .hours-row.today .time {
+            color: white;
+        }
+
+        /* Appointment Cards in Profile */
+        .appointment-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .appointment-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .appointment-card.cancelled {
+            border-left-color: var(--gray);
+            opacity: 0.7;
+        }
+
+        /* Photo Markers */
+        .photo-marker {
+            border: 3px dashed var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .floating-card { display: none; }
+            .doctor-circle { width: 250px; height: 250px; }
+            .contact-hero { padding: 2rem 1rem; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showSection('home')">Медкнига</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('home')">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('doctors')">Врачи</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('clinics')">Клиники Шарыпово</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contacts')">Контакты</a></li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons">
+                    <button class="btn btn-outline-primary rounded-pill" onclick="openModal('login')">
+                        <i class="bi bi-box-arrow-in-right"></i> Войти
+                    </button>
+                    <button class="btn btn-primary rounded-pill" onclick="openModal('register')">
+                        <i class="bi bi-person-plus"></i> Регистрация
+                    </button>
+                </div>
+                <div class="d-flex gap-2 hidden" id="userMenu">
+                    <button class="btn btn-primary rounded-pill" onclick="showSection('profile')">
+                        <i class="bi bi-person-circle"></i> <span id="userNameDisplay">Профиль</span>
+                    </button>
+                    <button class="btn btn-outline-danger rounded-pill" onclick="logout()">
+                        <i class="bi bi-box-arrow-right"></i> Выйти
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== ГЛАВНАЯ СТРАНИЦА ==================== -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Запись к врачу онлайн в Шарыпово</h1>
+                    <p class="hero-subtitle">Бронируйте приёмы к лучшим специалистам города за минуты. Без очередей и телефонных звонков.</p>
+                    <button class="btn btn-gradient btn-lg" onclick="showSection('doctors')">
+                        <i class="bi bi-calendar-check"></i> Найти врача
+                    </button>
+                    
+                    <div class="row mt-5">
+                        <div class="col-4 stat-card">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-label">Врачей</span>
+                        </div>
+                        <div class="col-4 stat-card">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Клиник</span>
+                        </div>
+                        <div class="col-4 stat-card">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Запись онлайн</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-visual">
+                        <div class="floating-card">
+                            <div class="text-center">
+                                <i class="bi bi-hospital" style="font-size: 2rem; color: var(--primary);"></i>
+                                <div class="fw-bold mt-2">Современные клиники</div>
+                            </div>
+                        </div>
+                        <div class="floating-card">
+                            <div class="text-center">
+                                <i class="bi bi-lightning-charge" style="font-size: 2rem; color: var(--warning);"></i>
+                                <div class="fw-bold mt-2">Мгновенное подтверждение</div>
+                            </div>
+                        </div>
+                        <div class="floating-card">
+                            <div class="text-center">
+                                <i class="bi bi-star-fill" style="font-size: 2rem; color: #fbbf24;"></i>
+                                <div class="fw-bold mt-2">Рейтинг 4.9/5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="doctor-circle">
+                            <img src="https://avatars.mds.yandex.net/i?id=1bcafb341793fa334e796122b19d211a_l-4079452-images-thumbs&n=13" alt="Главный врач">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== О НАС ==================== -->
+    <section class="page-section" id="about">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">О проекте Медкнига</h1>
+                <p class="section-subtitle">Мы создаём будущее медицинских услуг в Шарыпово</p>
+            </div>
+
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-lg" style="border-radius: 30px; overflow: hidden;">
+                        <div class="card-body p-0">
+                            <div style="height: 400px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                <img src="https://medi.spb.ru/assets/images/v5/index-01.jpg" 
+                                  alt="Команда Медкнига" 
+                                   style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Цифровая медицина рядом с вами</h2>
+                    <p class="text-muted mb-3">Медкнига — это инновационная платформа для онлайн-записи к врачам в городе Шарыпово.</p>
+                    <button class="btn btn-gradient" onclick="showSection('clinics')">
+                        <i class="bi bi-hospital"></i> Наши клиники
+                    </button>
+                </div>
+            </div>
+
+            <!-- Команда -->
+            <div class="mt-5">
+                <h2 class="text-center mb-4">Наша команда</h2>
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="custom-card">
+                            <div class="team-avatar">
+                                <img src="https://vesna-lab24.ru/wp-content/uploads/2023/12/shimko-300x300.png" alt="Александр Иванов">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h5 class="mb-1">Александр Иванов</h5>
+                                <p class="text-muted small mb-0">Главный врач</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <div class="custom-card">
+                            <div class="team-avatar">
+                                <img src="https://dentaly.ru/thumb/2/-fzFCOHFY4NrmgpkqBcUYA/400r300/d/foto232447.jpg" alt="Елена Смирнова">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h5 class="mb-1">Елена Смирнова</h5>
+                                <p class="text-muted small mb-0">Кардиолог</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <div class="custom-card">
+                            <div class="team-avatar">
+                                <img src="https://vesna-lab24.ru/wp-content/uploads/2025/11/filipchuk-282x300.jpg" alt="Михаил Волков">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h5 class="mb-1">Михаил Волков</h5>
+                                <p class="text-muted small mb-0">Невролог</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <div class="custom-card">
+                            <div class="team-avatar">
+                                <img src="https://vesna-lab24.ru/wp-content/uploads/2023/10/maslovskaya-225x300.png" alt="Анна Козлова">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h5 class="mb-1">Анна Козлова</h5>
+                                <p class="text-muted small mb-0">Педиатр</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== КЛИНИКИ ==================== -->
+    <section class="page-section" id="clinics">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Клиники Шарыпово</h1>
+                <p class="section-subtitle">Все медицинские учреждения города в одном месте</p>
+            </div>
+
+            <div class="map-box" style="height:500px; border-radius:20px; overflow:hidden; margin-bottom: 3rem;">
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=89.198028%2C55.531006&mode=search&text=%D0%BA%D0%BB%D0%B8%D0%BD%D0%B8%D0%BA%D0%B8%20%D1%88%D0%B0%D1%80%D1%8B%D0%BF%D0%BE%D0%B2%D0%BE&z=13&l=map" 
+                    width="100%" height="100%" frameborder="0" allowfullscreen style="border-radius:20px;"></iframe>
+            </div>
+            
+            <div class="row g-4" id="clinicsGrid">
+                <!-- Клиники загружаются через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ВРАЧИ ==================== -->
+    <section class="page-section" id="doctors">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Наши специалисты</h1>
+                <p class="section-subtitle">Выберите врача и запишитесь на приём</p>
+            </div>
+
+            <div class="text-center mb-4">
+                <button class="filter-btn active" onclick="filterDoctors('all')">Все</button>
+                <button class="filter-btn" onclick="filterDoctors('therapist')">Терапевты</button>
+                <button class="filter-btn" onclick="filterDoctors('cardiologist')">Кардиологи</button>
+                <button class="filter-btn" onclick="filterDoctors('neurologist')">Неврологи</button>
+                <button class="filter-btn" onclick="filterDoctors('pediatrician')">Педиатры</button>
+                <button class="filter-btn" onclick="filterDoctors('dentist')">Стоматологи</button>
+            </div>
+
+            <div class="row g-4" id="doctorsGrid">
+                <!-- Врачи загружаются через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== КОНТАКТЫ ==================== -->
+    <section class="page-section" id="contacts">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Контакты</h1>
+                <p class="section-subtitle">Свяжитесь с нами любым удобным способом</p>
+            </div>
+
+            <!-- Контактные карточки -->
+            <div class="contact-hero">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="contact-info-card text-center">
+                            <div class="contact-icon bg-gradient-1 mx-auto">
+                                <i class="bi bi-telephone-fill text-white"></i>
+                            </div>
+                            <h4>Телефон</h4>
+                            <a href="tel:+73915399999" class="h5 text-decoration-none text-primary">8 (391) 532-80-30 </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="contact-info-card text-center">
+                            <div class="contact-icon bg-gradient-2 mx-auto">
+                                <i class="bi bi-envelope-fill text-white"></i>
+                            </div>
+                            <h4>Email</h4>
+                            <a href="mailto:info@medbook.ru" class="h5 text-decoration-none text-primary">infomedbook@mail.ru</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="contact-info-card text-center">
+                            <div class="contact-icon bg-gradient-3 mx-auto">
+                                <i class="bi bi-geo-alt-fill text-white"></i>
+                            </div>
+                            <h4>Адрес</h4>
+                            <p class="h5 text-primary">ул. Ленина, 45, Шарыпово</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Форма -->
+                <div class="col-lg-7">
+                    <div class="contact-form-card">
+                        <h3 class="mb-4"><i class="bi bi-chat-dots text-primary"></i> Напишите нам</h3>
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control form-control-custom" id="contactName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Телефон</label>
+                                    <input type="tel" class="form-control form-control-custom" id="contactPhone" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control form-control-custom" id="contactEmail" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Сообщение</label>
+                                    <textarea class="form-control form-control-custom" id="contactMessage" rows="4" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-gradient w-100" id="contactBtn">
+                                        <i class="bi bi-send"></i> Отправить
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="custom-card p-3 mb-4 text-center" style="background: #fff; border: 1px solid #e2e8f0;">
+                        <h5 class="mb-3" style="font-size: 0.95rem;">
+                            <i class="bi bi-clock text-primary"></i> Режим работы
+                        </h5>
+                        <div class="working-hours" id="workingHours" style="font-size: 0.9rem; line-height: 1.5;">
+                            <!-- Загружается через JS -->
+                        </div>
+                    </div>
+
+                    <div class="custom-card p-3 text-center" style="height: 140px;">
+                        <h5 class="mb-3" style="font-size: 0.92rem;">Мы в соцсетях</h5>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="#" class="social-link bg-vk" style="width:40px; height:40px;"><i class="bi bi-vk"></i></a>
+                            <a href="#" class="social-link bg-telegram" style="width:40px; height:40px;"><i class="bi bi-telegram"></i></a>
+                            <a href="#" class="social-link bg-whatsapp" style="width:40px; height:40px;"><i class="bi bi-whatsapp"></i></a>
+                            <a href="mailto:infomedbook@mail.ru" class="social-link bg-email" style="width:40px; height:40px;"><i class="bi bi-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="map-box" style="height: 500px;">
+                        <i class="bi bi-geo-alt-fill" style="font-size: 8rem; color: var(--primary); opacity: 0.8;"></i>
+                        <h3 class="mt-4" style="color: var(--dark);">г. Шарыпово</h3>
+                        <p class="h5 text-primary mb-4 fw-bold">ул. Ленина, 45</p>
+                        <a href="https://yandex.ru/maps/20094/sharypovo/?ll=89.189663%2C55.532515&z=17" 
+                           class="btn btn-primary btn-lg" target="_blank">
+                            <i class="bi bi-geo-alt me-2"></i>Открыть карту
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ПРОФИЛЬ ==================== -->
+    <section class="page-section" id="profile">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Личный кабинет</h1>
+                <p class="section-subtitle">Управляйте своими записями</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="custom-card p-4 mb-4">
+                        <div class="d-flex align-items-center gap-4">
+                            <div id="profileAvatar" style="width: 100px; height: 100px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; overflow: hidden;">
+                                <img src="https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-120.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="Профиль">
+                            </div>
+                            <div>
+                                <h3 id="profileName">Пользователь</h3>
+                                <p id="profileEmail" class="text-muted mb-0">email@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3">Мои записи</h4>
+                    <div id="appointmentsList">
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-calendar-x" style="font-size: 3rem;"></i>
+                            <p class="mt-3">У вас пока нет записей</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== МОДАЛЬНОЕ ОКНО ЗАПИСИ ==================== -->
+    <div class="modal fade" id="bookingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Запись к врачу</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="bookingDoctorInfo" class="mb-3"></div>
+                    <form id="bookingForm" onsubmit="handleBooking(event)">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-calendar"></i> Дата приёма</label>
+                            <input type="date" class="form-control form-control-custom" id="bookingDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-clock"></i> Время</label>
+                            <select class="form-control form-control-custom" id="bookingTime" required>
+                                <option value="">Выберите время</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-chat-left-text"></i> Причина обращения</label>
+                            <textarea class="form-control form-control-custom" id="bookingReason" rows="3" placeholder="Опишите симптомы или цель визита" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gradient w-100" id="bookingSubmitBtn">
+                            <i class="bi bi-calendar-check"></i> Подтвердить запись
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== МОДАЛЬНЫЕ ОКНА АВТОРИЗАЦИИ ==================== -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Login Form -->
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-envelope"></i> Email</label>
+                            <input type="email" class="form-control form-control-custom" id="loginEmail" required>
+                            <div class="invalid-feedback">Введите корректный email</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-lock"></i> Пароль</label>
+                            <input type="password" class="form-control form-control-custom" id="loginPassword" required minlength="6">
+                            <div class="invalid-feedback">Минимум 6 символов</div>
+                        </div>
+                        <div id="loginError" class="alert alert-danger hidden" role="alert"></div>
+                        <button type="submit" class="btn btn-gradient w-100" id="loginBtn">
+                            <i class="bi bi-box-arrow-in-right"></i> Войти
+                        </button>
+                        <p class="text-center mt-3 mb-0">
+                            Нет аккаунта? <a href="#" onclick="switchAuthMode('register')" class="text-decoration-none fw-bold">Зарегистрироваться</a>
+                        </p>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-person"></i> Имя</label>
+                            <input type="text" class="form-control form-control-custom" id="regName" required minlength="2">
+                            <div class="invalid-feedback">Минимум 2 символа</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-envelope"></i> Email</label>
+                            <input type="email" class="form-control form-control-custom" id="regEmail" required>
+                            <div class="invalid-feedback">Введите корректный email</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-lock"></i> Пароль</label>
+                            <input type="password" class="form-control form-control-custom" id="regPassword" required minlength="6">
+                            <div class="invalid-feedback">Минимум 6 символов</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-lock-fill"></i> Подтвердите пароль</label>
+                            <input type="password" class="form-control form-control-custom" id="regPasswordConfirm" required>
+                            <div class="invalid-feedback">Пароли не совпадают</div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="regTerms" required>
+                            <label class="form-check-label" for="regTerms">Я согласен с условиями</label>
+                            <div class="invalid-feedback">Необходимо согласие</div>
+                        </div>
+                        <div id="registerError" class="alert alert-danger hidden" role="alert"></div>
+                        <button type="submit" class="btn btn-gradient w-100" id="registerBtn">
+                            <i class="bi bi-person-plus"></i> Зарегистрироваться
+                        </button>
+                        <p class="text-center mt-3 mb-0">
+                            Уже есть аккаунт? <a href="#" onclick="switchAuthMode('login')" class="text-decoration-none fw-bold">Войти</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // ==================== ДАННЫЕ ВРАЧЕЙ ====================
+        const doctors = [
+            { 
+                id: 1, 
+                name: "Александр Петров", 
+                specialty: "therapist", 
+                specialtyName: "Терапевт", 
+                clinic: "Городская поликлиника №1", 
+                rating: 4.9, 
+                reviews: 128, 
+                experience: "15 лет", 
+                price: "2000₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2025/11/karpov-290x300.png"
+            },
+            { 
+                id: 2, 
+                name: "Елена Смирнова", 
+                specialty: "cardiologist", 
+                specialtyName: "Кардиолог", 
+                clinic: "МедЦентр Плюс", 
+                rating: 4.8, 
+                reviews: 96, 
+                experience: "12 лет", 
+                price: "2500₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2023/10/illarionova--300x300.jpg"
+            },
+            { 
+                id: 3, 
+                name: "Михаил Волков", 
+                specialty: "neurologist", 
+                specialtyName: "Невролог", 
+                clinic: "Детская поликлиника", 
+                rating: 4.9, 
+                reviews: 156, 
+                experience: "20 лет", 
+                price: "3000₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2025/11/bestalannyj-300x290.png"
+            },
+            { 
+                id: 4, 
+                name: "Анна Козлова", 
+                specialty: "pediatrician", 
+                specialtyName: "Педиатр", 
+                clinic: "Детская поликлиника", 
+                rating: 5.0, 
+                reviews: 203, 
+                experience: "7 лет", 
+                price: "1800₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2025/12/kanzerova-1-281x300.jpg"
+            },
+            { 
+                id: 5, 
+                name: "Сергей Новиков", 
+                specialty: "dentist", 
+                specialtyName: "Стоматолог", 
+                clinic: "Стоматология 'Дента'", 
+                rating: 4.7, 
+                reviews: 89, 
+                experience: "8 лет", 
+                price: "3500₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2025/11/shadrin2-300x285.jpg"
+            },
+            { 
+                id: 6, 
+                name: "Ольга Морозова", 
+                specialty: "therapist", 
+                specialtyName: "Терапевт", 
+                clinic: "МедЦентр Плюс", 
+                rating: 4.8, 
+                reviews: 145, 
+                experience: "14 лет", 
+                price: "2200₽", 
+                photo: "https://vesna-lab24.ru/wp-content/uploads/2023/10/chelobitchenko-300x300.jpg"
+            }
+        ];
+        
+        const sharypovoClinics = [
+            {
+                id: 1,
+                name: "Городская поликлиника №1",
+                type: "Государственная",
+                address: "ул. Ленина, 45, Шарыпово",
+                phone: "+7 (39153) 2-22-33",
+                hours: "Пн-Пт: 8:00-20:00, Сб: 9:00-14:00",
+                services: ["Терапия", "Педиатрия", "Хирургия", "Гинекология"],
+                description: "Центральная городская поликлиника с полным спектром медицинских услуг."
+            },
+            {
+                id: 2,
+                name: "Детская поликлиника",
+                type: "Государственная",
+                address: "ул. Горького, 12, Шарыпово",
+                phone: "+7 (39153) 3-44-55",
+                hours: "Пн-Пт: 8:00-19:00",
+                services: ["Педиатрия", "Неврология", "Офтальмология"],
+                description: "Специализированная детская клиника с современным оборудованием."
+            },
+            {
+                id: 3,
+                name: "МедЦентр Плюс",
+                type: "Частная",
+                address: "ул. Кирова, 28, Шарыпово",
+                phone: "+7 (39153) 5-67-89",
+                hours: "Пн-Сб: 9:00-21:00",
+                services: ["УЗИ", "ЭКГ", "Анализы", "Вакцинация"],
+                description: "Современный медицинский центр с диагностическим оборудованием."
+            },
+            {
+                id: 4,
+                name: "Стоматология 'Дента'",
+                type: "Частная",
+                address: "ул. Советская, 15, Шарыпово",
+                phone: "+7 (39153) 4-56-78",
+                hours: "Пн-Пт: 9:00-20:00",
+                services: ["Лечение", "Имплантация", "Ортодонтия"],
+                description: "Семейная стоматология с безболезненным лечением."
+            }
+        ];
+
+        let currentUser = null;
+        let selectedDoctorId = null;
+        let authModal;
+        let bookingModal;
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            authModal = new bootstrap.Modal(document.getElementById('authModal'));
+            bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+            renderClinics();
+            renderDoctors(doctors);
+            checkAuth();
+            highlightToday();
+        });
+
+        // Подсветка текущего дня
+        function highlightToday() {
+            const today = new Date().getDay();
+            const hours = [
+                { day: 1, name: "Понедельник", time: "8:00 - 20:00" },
+                { day: 2, name: "Вторник", time: "8:00 - 20:00" },
+                { day: 3, name: "Среда", time: "8:00 - 20:00" },
+                { day: 4, name: "Четверг", time: "8:00 - 20:00" },
+                { day: 5, name: "Пятница", time: "8:00 - 20:00" },
+                { day: 6, name: "Суббота", time: "9:00 - 18:00" },
+                { day: 0, name: "Воскресенье", time: "Выходной" }
+            ];
+            
+            const container = document.getElementById('workingHours');
+            if (container) {
+                container.innerHTML = hours.map(h => `
+                    <div class="hours-row ${h.day === today ? 'today' : ''}" data-day="${h.day}">
+                        <span class="day">${h.name} ${h.day === today ? '<span class="badge bg-white text-primary ms-2">Сегодня</span>' : ''}</span>
+                        <span class="time">${h.time}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Навигация
+        function showSection(section) {
+            document.querySelectorAll('.page-section, .hero-section').forEach(s => {
+                s.style.display = 'none';
+                s.classList.remove('active');
+            });
+            
+            if (section === 'home') {
+                document.getElementById('home').style.display = 'flex';
+            } else {
+                const el = document.getElementById(section);
+                if (el) {
+                    el.style.display = 'block';
+                    el.classList.add('active');
+                }
+            }
+            
+            // Если открываем профиль — рендерим записи
+            if (section === 'profile' && currentUser) {
+                renderAppointments();
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Рендер клиник
+        function renderClinics() {
+            const grid = document.getElementById('clinicsGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = sharypovoClinics.map(clinic => `
+                <div class="col-md-6">
+                    <div class="custom-card">
+                        <div style="height: 120px; background: var(--gradient-1); position: relative;">
+                            <div class="clinic-logo">
+                                <i class="bi bi-hospital"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 pt-5">
+                            <span class="badge-custom">${clinic.type}</span>
+                            <h4 class="mt-2">${clinic.name}</h4>
+                            
+                            <div class="mt-3 mb-3">
+                                <div class="d-flex align-items-start gap-2 mb-2 text-muted">
+                                    <i class="bi bi-geo-alt-fill text-primary"></i>
+                                    <small>${clinic.address}</small>
+                                </div>
+                                <div class="d-flex align-items-start gap-2 mb-2 text-muted">
+                                    <i class="bi bi-telephone-fill text-primary"></i>
+                                    <small>${clinic.phone}</small>
+                                </div>
+                                <div class="d-flex align-items-start gap-2 text-muted">
+                                    <i class="bi bi-clock-fill text-primary"></i>
+                                    <small>${clinic.hours}</small>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                ${clinic.services.map(s => `<span class="service-tag">${s}</span>`).join('')}
+                            </div>
+
+                            <p class="text-muted small mb-3">${clinic.description}</p>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-gradient flex-fill" onclick="showSection('doctors')">
+                                    <i class="bi bi-calendar-check"></i> Записаться
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="showToast('Телефон: ${clinic.phone}')">
+                                    <i class="bi bi-telephone"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Рендер врачей
+        function renderDoctors(list) {
+            const grid = document.getElementById('doctorsGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = list.map(doctor => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="custom-card">
+                        <div class="card-header-gradient">
+                            <div class="card-avatar">
+                                <img src="${doctor.photo}" alt="${doctor.name}">
+                            </div>
+                        </div>
+                        <div class="card-body-custom">
+                            <h5>${doctor.name}</h5>
+                            <div class="text-primary fw-bold mb-2">${doctor.specialtyName}</div>
+                            <div class="text-muted small mb-3">
+                                <i class="bi bi-hospital"></i> ${doctor.clinic}
+                            </div>
+                            
+                            <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
+                                <span class="star-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </span>
+                                <span class="fw-bold">${doctor.rating}</span>
+                                <span class="text-muted small">(${doctor.reviews})</span>
+                            </div>
+
+                            <div class="d-flex justify-content-around border-top pt-3 mb-3">
+                                <div>
+                                    <div class="fw-bold">${doctor.experience}</div>
+                                    <small class="text-muted">Опыт</small>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">${doctor.price}</div>
+                                    <small class="text-muted">Приём</small>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-gradient w-100" onclick="openBooking(${doctor.id})">
+                                <i class="bi bi-calendar-plus"></i> Записаться
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterDoctors(specialty) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (specialty === 'all') {
+                renderDoctors(doctors);
+            } else {
+                renderDoctors(doctors.filter(d => d.specialty === specialty));
+            }
+        }
+
+        // Валидация
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // ==================== АВТОРИЗАЦИЯ ====================
+
+        function openModal(type) {
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            document.querySelectorAll('.form-control-custom').forEach(el => el.classList.remove('is-invalid'));
+            document.getElementById('loginError').classList.add('hidden');
+            document.getElementById('registerError').classList.add('hidden');
+            
+            document.getElementById('loginForm').classList.toggle('hidden', type !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', type !== 'register');
+            document.getElementById('modalTitle').textContent = type === 'login' ? 'Вход в аккаунт' : 'Регистрация';
+            authModal.show();
+        }
+
+        function closeModal() {
+            authModal.hide();
+        }
+
+        function switchAuthMode(mode) {
+            document.getElementById('loginForm').classList.toggle('hidden', mode !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', mode !== 'register');
+            document.getElementById('modalTitle').textContent = mode === 'login' ? 'Вход в аккаунт' : 'Регистрация';
+            document.getElementById('loginError').classList.add('hidden');
+            document.getElementById('registerError').classList.add('hidden');
+        }
+
+        function validateLoginForm() {
+            const email = document.getElementById('loginEmail');
+            const password = document.getElementById('loginPassword');
+            let isValid = true;
+
+            email.classList.remove('is-invalid');
+            password.classList.remove('is-invalid');
+
+            if (!email.value.trim() || !isValidEmail(email.value)) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!password.value || password.value.length < 6) {
+                password.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function validateRegisterForm() {
+            const name = document.getElementById('regName');
+            const email = document.getElementById('regEmail');
+            const password = document.getElementById('regPassword');
+            const confirm = document.getElementById('regPasswordConfirm');
+            const terms = document.getElementById('regTerms');
+            let isValid = true;
+
+            [name, email, password, confirm].forEach(el => el.classList.remove('is-invalid'));
+
+            if (!name.value.trim() || name.value.trim().length < 2) {
+                name.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!email.value.trim() || !isValidEmail(email.value)) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!password.value || password.value.length < 6) {
+                password.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (password.value !== confirm.value || !confirm.value) {
+                confirm.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!terms.checked) {
+                terms.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            document.getElementById('loginError').classList.add('hidden');
+            
+            if (!validateLoginForm()) return;
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Вход...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                // Проверяем, есть ли пользователь в базе зарегистрированных
+                const users = JSON.parse(localStorage.getItem('medbook_users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (!user) {
+                    document.getElementById('loginError').textContent = 'Неверный email или пароль. Сначала зарегистрируйтесь.';
+                    document.getElementById('loginError').classList.remove('hidden');
+                    btn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Войти';
+                    btn.disabled = false;
+                    return;
+                }
+                
+                currentUser = { name: user.name, email: user.email };
+                localStorage.setItem('medbook_user', JSON.stringify(currentUser));
+                closeModal();
+                updateUI();
+                showToast('Добро пожаловать, ' + currentUser.name + '!');
+                btn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Войти';
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            document.getElementById('registerError').classList.add('hidden');
+            
+            if (!validateRegisterForm()) return;
+
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const btn = document.getElementById('registerBtn');
+            
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Регистрация...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                // Проверяем, нет ли уже такого email
+                let users = JSON.parse(localStorage.getItem('medbook_users') || '[]');
+                if (users.find(u => u.email === email)) {
+                    document.getElementById('registerError').textContent = 'Пользователь с таким email уже зарегистрирован.';
+                    document.getElementById('registerError').classList.remove('hidden');
+                    btn.innerHTML = '<i class="bi bi-person-plus"></i> Зарегистрироваться';
+                    btn.disabled = false;
+                    return;
+                }
+                
+                // Сохраняем нового пользователя
+                users.push({ name, email, password });
+                localStorage.setItem('medbook_users', JSON.stringify(users));
+                
+                currentUser = { name, email };
+                localStorage.setItem('medbook_user', JSON.stringify(currentUser));
+                closeModal();
+                updateUI();
+                showToast('Регистрация успешна! Добро пожаловать, ' + name + '!');
+                btn.innerHTML = '<i class="bi bi-person-plus"></i> Зарегистрироваться';
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('medbook_user');
+            updateUI();
+            showSection('home');
+            showToast('Вы вышли из системы');
+        }
+
+        function checkAuth() {
+            const saved = localStorage.getItem('medbook_user');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            
+            if (currentUser) {
+                authButtons.classList.add('hidden');
+                userMenu.classList.remove('hidden');
+                document.getElementById('userNameDisplay').textContent = currentUser.name;
+                const profileName = document.getElementById('profileName');
+                const profileEmail = document.getElementById('profileEmail');
+                if (profileName) profileName.textContent = currentUser.name;
+                if (profileEmail) profileEmail.textContent = currentUser.email;
+            } else {
+                authButtons.classList.remove('hidden');
+                userMenu.classList.add('hidden');
+            }
+        }
+
+        // ==================== СИСТЕМА ЗАПИСИ ====================
+
+        function openBooking(doctorId) {
+            if (!currentUser) {
+                openModal('login');
+                showToast('Сначала войдите в аккаунт', 'error');
+                return;
+            }
+            
+            selectedDoctorId = doctorId;
+            const doctor = doctors.find(d => d.id === doctorId);
+            
+            document.getElementById('bookingDoctorInfo').innerHTML = `
+                <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3">
+                    <img src="${doctor.photo}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+                    <div>
+                        <h6 class="mb-0 fw-bold">${doctor.name}</h6>
+                        <small class="text-muted">${doctor.specialtyName} • ${doctor.clinic}</small>
+                    </div>
+                </div>
+            `;
+            
+            // Устанавливаем минимальную дату (завтра)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookingDate').min = tomorrow.toISOString().split('T')[0];
+            document.getElementById('bookingDate').value = '';
+            document.getElementById('bookingTime').value = '';
+            document.getElementById('bookingReason').value = '';
+            
+            bookingModal.show();
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const reason = document.getElementById('bookingReason').value.trim();
+            const btn = document.getElementById('bookingSubmitBtn');
+            
+            if (!date || !time || !reason) {
+                showToast('Заполните все поля', 'error');
+                return;
+            }
+            
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Сохранение...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                const doctor = doctors.find(d => d.id === selectedDoctorId);
+                
+                const appointment = {
+                    id: Date.now(),
+                    userEmail: currentUser.email,
+                    doctorId: selectedDoctorId,
+                    doctorName: doctor.name,
+                    doctorSpecialty: doctor.specialtyName,
+                    doctorPhoto: doctor.photo,
+                    clinic: doctor.clinic,
+                    date: date,
+                    time: time,
+                    reason: reason,
+                    status: 'active',
+                    createdAt: new Date().toISOString()
+                };
+                
+                let appointments = JSON.parse(localStorage.getItem('medbook_appointments') || '[]');
+                appointments.push(appointment);
+                localStorage.setItem('medbook_appointments', JSON.stringify(appointments));
+                
+                bookingModal.hide();
+                showToast('Запись успешно создана!');
+                
+                // Если мы в профиле — обновляем список
+                const profileSection = document.getElementById('profile');
+                if (profileSection.style.display === 'block' || profileSection.classList.contains('active')) {
+                    renderAppointments();
+                }
+                
+                btn.innerHTML = '<i class="bi bi-calendar-check"></i> Подтвердить запись';
+                btn.disabled = false;
+            }, 1000);
+        }
+
+        function renderAppointments() {
+            const container = document.getElementById('appointmentsList');
+            if (!container || !currentUser) return;
+            
+            const appointments = JSON.parse(localStorage.getItem('medbook_appointments') || '[]')
+                .filter(a => a.userEmail === currentUser.email)
+                .sort((a, b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time));
+            
+            if (appointments.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-5">
+                        <i class="bi bi-calendar-x" style="font-size: 3rem;"></i>
+                        <p class="mt-3">У вас пока нет записей</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = appointments.map(app => `
+                <div class="appointment-card ${app.status === 'cancelled' ? 'cancelled' : ''}">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="${app.doctorPhoto}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1 fw-bold">${app.doctorName}</h6>
+                            <small class="text-muted">${app.doctorSpecialty} • ${app.clinic}</small>
+                            <div class="mt-2 d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary"><i class="bi bi-calendar"></i> ${formatDate(app.date)}</span>
+                                <span class="badge bg-info text-dark"><i class="bi bi-clock"></i> ${app.time}</span>
+                                <span class="badge ${app.status === 'active' ? 'bg-success' : 'bg-secondary'}">
+                                    ${app.status === 'active' ? 'Активна' : 'Отменена'}
+                                </span>
+                            </div>
+                            <small class="text-muted d-block mt-2"><i class="bi bi-chat-left-text"></i> ${app.reason}</small>
+                        </div>
+                        ${app.status === 'active' ? `
+                            <button class="btn btn-outline-danger btn-sm" onclick="cancelAppointment(${app.id})" title="Отменить запись">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function cancelAppointment(id) {
+            if (!confirm('Вы уверены, что хотите отменить запись?')) return;
+            
+            let appointments = JSON.parse(localStorage.getItem('medbook_appointments') || '[]');
+            const idx = appointments.findIndex(a => a.id === id);
+            if (idx !== -1) {
+                appointments[idx].status = 'cancelled';
+                localStorage.setItem('medbook_appointments', JSON.stringify(appointments));
+                renderAppointments();
+                showToast('Запись отменена');
+            }
+        }
+
+        // ==================== КОНТАКТЫ ====================
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contactBtn');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Отправка...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                showToast('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
+                document.getElementById('contactForm').reset();
+                btn.innerHTML = '<i class="bi bi-send"></i> Отправить';
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // ==================== TOAST ====================
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.borderLeftColor = type === 'error' ? 'var(--danger)' : 'var(--success)';
+            toast.innerHTML = `
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi ${type === 'error' ? 'bi-x-circle-fill text-danger' : 'bi-check-circle-fill text-success'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
